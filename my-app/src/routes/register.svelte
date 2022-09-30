@@ -3,7 +3,7 @@
 	import { post } from 'utils.js';
 	const {session}= stores();
 	let username = '';
-	let email = '';
+	let name = '';
 	let password = '';
 
 	async function submit(event) {
@@ -31,24 +31,26 @@
 					<a href="/login">Have an account?</a>
 				</p>
 
-
+                {#if error}
+                    {error}
+                    {#/if}
 				<form on:submit|preventDefault={submit}>
 					<fieldset class="form-group">
 						<input
 							class="form-control form-control-lg"
 							type="text"
 							required
-							placeholder="Your Name"
+							placeholder="Your Username"
 							bind:value={username}
 						/>
 					</fieldset>
 					<fieldset class="form-group">
 						<input
 							class="form-control form-control-lg"
-							type="email"
+							type="text"
 							required
-							placeholder="Email"
-							bind:value={email}
+							placeholder="Name"
+							bind:value={name}
 						/>
 					</fieldset>
 					<fieldset class="form-group">
