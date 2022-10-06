@@ -1,17 +1,15 @@
-import { error, json } from '@sveltejs/kit';
+import * as api from 'api.js';
 
-export function respond(body) {
-    if (body.errors) {
-        throw error(401, body);
-    }
+export function post(req, res) {
+    const user = req.body;
 
-    const value = Buffer.from(JSON.stringify(body.user)).toString('base64');
-
-    return json(body, {
-        headers: {
-            'set-cookie': `jwt=${value}; Path=/; HttpOnly`
+    api.post('users', user).then(response => {
+        if (response.user) {
+            req.session.user = response.user;
         }
+
+        res.setHeader('Content-Type', 'application/json');
+
+        res.end(JSON.stringify(response));
     });
 }
-import * as api from'api.js';
-/*export function post()*/

@@ -24,6 +24,7 @@ export default {
 		input: config.client.input(),
 		output: config.client.output(),
 		plugins: [
+
 			copy({
 				targets: [{
 					src: 'node_modules/bootstrap/dist/**/*',
