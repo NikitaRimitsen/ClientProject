@@ -1,10 +1,10 @@
-<!--<script context="module">
+<script context="module">
     export async function preload({ params }, { token }) {
         if (token) {
             this.redirect(302, `/`);
         }
     }
-</script>-->
+</script>
 
 <script>
     import { goto, stores } from '@sapper/app';
@@ -14,13 +14,13 @@
 
     let username = '';
     let password = '';
-    let errors = null;
+    let error = null;
 
     async function submit(event) {
         const response = await post(`auth/login`, { username, password });
 
         // TODO handle network errors
-        errors = response.errors;
+        error = response.error;
         console.log(response)
         if (response.token) {
             $session.token = response.token;
@@ -41,8 +41,9 @@
                 <p class="text-xs-center">
                     <a href="/register">Need an account?</a>
                 </p>
-
-
+                {#if error}
+                    <div class="alert alert-danger" role="alert">{error}</div>
+                {/if}
                 <form on:submit|preventDefault={submit}>
                     <fieldset class="form-group">
                         <input class="form-control form-control-lg" type="text" required placeholder="Email" bind:value={username}>
@@ -58,4 +59,3 @@
         </div>
     </div>
 </div>
-Footer
